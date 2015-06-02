@@ -1,0 +1,556 @@
+{
+  "_id" : "master_control",
+  "type" : "control",
+  "title" : "Master Controls",
+  "description" : "Control the cs laser",
+
+ "html" : """
+
+
+
+ <h1 >Monitor</h1>
+ <div data-role='controlgroup' data-type='horizontal'>
+     <a href='#' data-role='button' data-inline='true' class='makeNewPlot ui-disabled'>Insert New Graph</a>
+     <select class='selectCurrentPlot ui-disabled'>
+     </select>
+     <a href='#' data-role='button' data-inline='true' class='removePlot ui-disabled'>Remove Selected</a>
+ </div>
+ <div data-role='controlgroup' data-type='horizontal'>
+     <a href='#' data-role='button' data-inline='true' class='addSlowControl ui-disabled'>Add to selected graph</a>
+     <select class='selectSlowControl ui-disabled' multiple='multiple' data-native-menu='false'>
+       <option>Available variables:</option>
+     </select>
+ </div>
+
+ <div class='monitor_div'>
+ </div>
+
+
+
+
+
+
+<div data-role="main" class="ui-content">
+    <div data-role="collapsibleset">
+      <div data-role="collapsible">
+        <h3>Laser Diode Controller</h3>
+        <div class="ui-grid-a ui-responsive">
+            <div class="ui-block-a">
+            <h3> Pump Laser Monitoring </h3>
+                <span> Pump Laser Current [mA] </span>
+                <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='PumpCurrentMonitor'>
+                <span> Pump Laser Temperature [C] </span>
+                <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='PumpTemperatureMonitor'>
+                <select name="slidy" style="margin-left : auto; margin-right : auto;" id="pump_slider_monitor" data-role="slider">
+                    <option value="PumpOn"> On </option>
+                    <option value="PumpOff"> Off </option>
+                </select>
+             </div>
+
+            <div class="ui-block-b">
+            <h3> Probe Laser Monitoring </h3>
+                <span> Probe Laser Current [mA] </span>
+                <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='ProbeCurrentMonitor'>
+                <span> Probe Laser Temperature [C] </span>
+                <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='ProbeTemperatureMonitor'>
+                <select name="slidy2" style="margin-left : auto; margin-right : auto;" id="probe_slider_monitor" data-role="slider">
+                    <option value="ProbeOn"> On </option>
+                    <option value="ProbeOff"> Off </option>
+                </select>
+             </div>
+	</div>
+      </div>
+      <div data-role="collapsible">
+        <h3>PID</h3>
+        <div data-role = '.controlgroup' data-type='horizontal'>
+            <div class="ui-grid-a ui-responsive">
+                <div class="ui-block-a">
+                <h3> Pump PID Monitor </h3>
+                    <span> Pump Laser Setpoint [V] </span>
+                    <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='PumpSetpointMonitor'>
+                    <span> Pump Laser P </span>
+                    <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='PumpPMonitor'>
+                    <span> Pump Laser I </span>
+                    <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='PumpIMonitor'>
+                    <span> Pump Laser D </span>
+                    <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='PumpDMonitor'>
+                    <select name="slidy4" style="margin-left : auto; margin-right : auto;" id="pump_lock_slider_monitor" data-role="slider">
+                        <option value="PumpLockOn"> On </option>
+                        <option value="PumpLockOff"> Off </option>
+                    </select>
+                 </div>
+
+                <div class="ui-block-b">
+                <h3> Probe PID Monitor </h3>
+                    <span> Probe Laser Setpoint [V] </span>
+                    <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='ProbeSetpointMonitor'>
+                    <span> Probe Laser P </span>
+                    <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='ProbePMonitor'>
+                    <span> Probe Laser I </span>
+                    <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='ProbeIMonitor'>
+                    <span> Probe Laser D </span>
+                    <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='ProbeDMonitor'>
+                    <select name="slidy4" style="margin-left : auto; margin-right : auto;" id="probe_lock_slider_monitor" data-role="slider">
+                        <option value="ProbeLockOn"> On </option>
+                        <option value="ProbeLockOff"> Off </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div data-role="collapsible">
+        <h3>Battery Box</h3>
+        <p>Kommt irgendwann mal... bestimmt!</p>
+      </div>
+      <div data-role="collapsible">
+        <h3>Lock-In</h3>
+        <div id="lockinstream"></div>
+
+        <div class="ui-grid-b ui-responsive">
+            <div class="ui-block-a">
+            <fieldset>
+                <label for="LockInCH">Select Lock-In Channels to stream:</label>
+                <select name="LockInCH" id="LockInCH" multiple="multiple" data-native-menu="false">
+                  <option>Lock-In Channel</option>
+                  <option value="1">X</option>
+                  <option value="2">Y</option>
+                  <option value="3">R</option>
+                  <option value="4">Theta</option>
+                  <option value="5">AUX IN 1</option>
+                  <option value="6">AUX IN 2</option>
+                  <option value="7">AUX IN 3</option>
+                  <option value="8">AUX IN 4</option>
+                </select>
+            </fieldset>
+            </div>
+            <div class="ui-block-b">
+                <span> Select Lock-In </span>
+                <select name="Lock-In" id='lock-in_monitoring'>
+                    <option value="SR830">SR830 (Port 100)</option>
+                    <option value="SR830_2">SR830_2 (Port 102)</option>
+                </select>
+            </div>
+            <div class="ui-block-c">
+               <span> Get Data </span>
+               <button class="ui-btn ui-corner-all" id="StartLockInStreaming"> Start Streaming </button>
+            </div>
+        </div>
+     </div>
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+<div data-role = '.controlgroup' data-type='horizontal'>
+    <div class="ui-grid-c ui-responsive">
+        <div class="ui-block-a">
+            <a href="#CommandPopup" data-rel="popup" class="ui-btn ui-corner-all"> Send Single Command </a>
+        </div>
+        <div class="ui-block-b">
+            <a href="#FOPopup" data-rel="popup" class="ui-btn ui-corner-all"> Forced Oscillation Scan </a>
+        </div>
+        <div class="ui-block-c">
+            <a href="#LaserSettings" data-rel="popup" class="ui-btn ui-corner-all"> Laser Settings </a>
+        </div>
+        <div class="ui-block-d">
+            <a href="#LockSettings" data-rel="popup" class="ui-btn ui-corner-all"> Lock Settings </a>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div data-role = '.controlgroup' data-type='horizontal'>
+    <div class="ui-grid-c ui-responsive">
+        <div class="ui-block-a">
+            <a href="#DAVLLScan" data-rel="popup" class="ui-btn ui-corner-all"> DAVLL Scan </a>
+        </div>
+        <div class="ui-block-b">
+            <a href="#FID" data-rel="popup" class="ui-btn ui-corner-all"> FID </a>
+        </div>
+        <div class="ui-block-c">
+            <a href="#DAVLLPuppy" data-rel="popup" class="ui-btn ui-corner-all"> DAVLL Puppy </a>
+        </div>
+        <div class="ui-block-d">
+            <a href="#BatteryBox" data-rel="popup" class="ui-btn ui-corner-all"> Battery Box  </a>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<div data-role="popup" data-transition="slideup" data-position-to = "window" id="DAVLLScan" class="ui-content">
+    <h2> DAVLL Scan </h2>
+    <div id="davllscan"></div>
+    <div data-role = '.controlgroup' data-type='horizontal'>
+        <div class="ui-grid-b ui-responsive">
+            <div class="ui-block-a">
+                <span> Start Voltage [V] </span>
+                <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='DAVLLStart'>
+             </div>
+
+            <div class="ui-block-b">
+                <span> Stop Voltage [V] </span>
+                <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='DAVLLStop'>
+            </div>
+
+            <div class="ui-block-c">
+                <span> Increment [V] </span>
+                <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='DAVLLIncrement'>
+            </div>
+        </div>
+
+        <div class="ui-grid-a ui-responsive">
+            <div class="ui-block-a">
+                <button class="ui-btn ui-corner-all" id="StartDAVLLScan"> Start DAVLL Scan </button>
+            </div>
+            <div class="ui-block-b">
+                 <button class="ui-btn ui-corner-all" id="StopDAVLLScan"> Stop DAVLL Scan </button>
+            </div>
+        </div>
+
+    </div>
+    <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-left">Close</a>
+
+
+</div>
+
+
+
+<div data-role="popup" data-transition="slideup" data-position-to = "window" id="FID" class="ui-content">
+    <h2> FID </h2>
+    <div data-role = '.controlgroup' data-type='horizontal'>
+        <div class="ui-grid-b ui-responsive">
+            <div class="ui-block-a">
+                <span> Burst Frequency [Hz]] </span>
+                <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='FIDFrequency'>
+             </div>
+
+            <div class="ui-block-b">
+                <span> Number of Bursts </span>
+                <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='FIDBursts'>
+            </div>
+
+            <div class="ui-block-c">
+                <span> Delay Time [mus] </span>
+                <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='FIDDelay'>
+            </div>
+        </div>
+
+        <div class="ui-grid-a ui-responsive">
+            <div class="ui-block-a">
+                <button class="ui-btn ui-corner-all" id="StartFID"> Start FID Mode </button>
+            </div>
+            <div class="ui-block-b">
+                 <button class="ui-btn ui-corner-all" id="StopFID"> Stop FID Mode </button>
+            </div>
+        </div>
+
+    </div>
+
+    <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-left">Close</a>
+
+</div>
+
+
+
+<div data-role="popup" data-transition="slideup" data-position-to = "window" id="DAVLLPuppy" class="ui-content">
+    <h2> DAVLL Puppy </h2>
+    <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-left">Close</a>
+
+</div>
+
+
+<div data-role="popup" data-transition="slideup" data-position-to = "window" id="BatteryBox" class="ui-content">
+    <h2> Battery Box </h2>
+    <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-left">Close</a>
+</div>
+
+
+
+
+
+<div data-role="popup" data-transition="slideup" data-position-to = "window" id="CommandPopup" class="ui-content">
+    <h2> Send Command to Device </h2>
+    <textarea data-wrapper-class="controlgroup-textinput" class="input_val" id="send_command"></textarea>
+    <span> Adresse/Port of Device </span>
+    <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='AdressDevice'>
+    <button class='ui-corner-all'>Send Single Command To Device</button>
+    <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-left">Close</a>
+
+</div>
+
+
+
+<div data-role="popup" data-transition="slideup" style="height : 150%;" data-position-to = "window" id="LaserSettings" class="ui-content">
+    <h2> Laser Diode Settings </h2>
+    <div data-role = '.controlgroup' data-type='horizontal'>
+        <div class="ui-grid-a ui-responsive">
+            <div class="ui-block-a">
+            <h3> Pump Laser Settings </h3>
+                <span> Pump Laser Current [mA] </span>
+                <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='PumpCurrent'>
+                <span> Pump Laser Temperature [C] </span>
+                <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='PumpTemperature'>
+                <button class="ui-corner-all"> Submit </button>
+                <select name="slidy" style="margin-left : auto; margin-right : auto;" id="pump_slider" data-role="slider">
+                    <option value="PumpOn"> On </option>
+                    <option value="PumpOff"> Off </option>
+                </select>
+             </div>
+
+            <div class="ui-block-b">
+            <h3> Probe Laser Settings </h3>
+                <span> Probe Laser Current [mA] </span>
+                <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='ProbeCurrent'>
+                <span> Probe Laser Temperature [C] </span>
+                <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='ProbeTemperature'>
+                <button class="ui-corner-all"> Submit </button>
+                <select name="slidy2" style="margin-left : auto; margin-right : auto;" id="probe_slider" data-role="slider">
+                    <option value="ProbeOn"> On </option>
+                    <option value="ProbeOff"> Off </option>
+                </select>
+             </div>
+
+
+
+        </div>
+    </div>
+    <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-left">Close</a>
+</div>
+
+
+
+
+<div data-role="popup" data-transition="slideup" style="height : 150%;" data-position-to = "window" id="LockSettings" class="ui-content">
+    <h2> Laser Lock Settings </h2>
+    <div data-role = '.controlgroup' data-type='horizontal'>
+        <div class="ui-grid-a ui-responsive">
+            <div class="ui-block-a">
+            <h3> Pump PID Settingss </h3>
+                <span> Pump Laser Setpoint [V] </span>
+                <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='PumpSetpoint'>
+                <span> Pump Laser P </span>
+                <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='PumpP'>
+                <span> Pump Laser I </span>
+                <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='PumpI'>
+                <span> Pump Laser D </span>
+                <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='PumpD'>
+                <button class="ui-corner-all"> Submit </button>
+                <select name="slidy4" style="margin-left : auto; margin-right : auto;" id="pump_lock_slider" data-role="slider">
+                    <option value="PumpLockOn"> On </option>
+                    <option value="PumpLockOff"> Off </option>
+                </select>
+             </div>
+
+            <div class="ui-block-b">
+            <h3> Probe PID Settingss </h3>
+                <span> Probe Laser Setpoint [V] </span>
+                <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='ProbeSetpoint'>
+                <span> Probe Laser P </span>
+                <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='ProbeP'>
+                <span> Probe Laser I </span>
+                <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='ProbeI'>
+                <span> Probe Laser D </span>
+                <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='ProbeD'>
+                <button class="ui-corner-all"> Submit </button>
+                <select name="slidy4" style="margin-left : auto; margin-right : auto;" id="probe_lock_slider" data-role="slider">
+                    <option value="ProbeLockOn"> On </option>
+                    <option value="ProbeLockOff"> Off </option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-left">Close</a>
+</div>
+
+
+
+
+
+
+
+
+
+<div data-role="popup" data-transition="slideup" data-position-to = "window" id="FOPopup" class="ui-content FOSCAN">
+    <h2> &emsp; &emsp; Forced Oscillation Scan </h2>
+    <div data-role = '.controlgroup' data-type='horizontal'>
+    <div class="fograph"></div>
+    <div class="ui-grid-b ui-responsive">
+        <div class="ui-block-a">
+            <span> Start Frequency [Hz] </span>
+            <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='startf'>
+        </div>
+        <div class="ui-block-b">
+            <span> Stop Frequency [Hz] </span>
+            <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='stopf'>
+        </div>
+         <div class="ui-block-c">
+            <span> Increment [Hz] </span>
+            <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='incrementf'>
+        </div>
+    </div>
+
+    <div class="ui-grid-a ui-responsive">
+        <div class="ui-block-a">
+            <span> Select Lock-In </span>
+            <select name="Lock-In" id='SelectLockIn'>
+                <option value="SR830">SR830 (Port 100)</option>
+                <option value="SR830_2">SR830_2 (Port 102)</option>
+            </select>
+            <span> Lock-In Time Constant </span>
+            <select name="LockInTime" id='LockInTimeConstant'>
+                <option value="19"> 30 ks </option>
+		<option value="18"> 10 ks </option>
+		<option value="17"> 3 ks </option>
+		<option value="16"> 1 ks </option>
+		<option value="15"> 300 s </option>
+		<option value="14"> 100 s </option>
+		<option value="13"> 30 s </option>
+		<option value="12"> 10 s </option>
+		<option value="11"> 3 s </option>
+		<option value="10"> 1 s </option>
+		<option value="9"> 300 ms </option>
+		<option value="8"> 100 ms </option>
+		<option value="7"> 30 ms </option>
+		<option value="6"> 10 ms </option>
+		<option value="5"> 3 ms </option>
+		<option value="4"> 1 ms </option>
+		<option value="3"> 300 muS </option>
+		<option value="2"> 100 muS </option>
+		<option value="1"> 30 muS </option>
+		<option value="0"> 10 muS </option>
+            </select>
+            <span> Lock-In Attenuation </span>
+            <select name="LockInAtt" id="LockInAtt">
+		<option value="3"> 24 dB/oct </option>
+		<option value="2"> 18 dB/oct </option>
+		<option value="1"> 12 dB/oct </option>
+		<option value="0"> 6 dB/oct </option>
+            </select>
+        </div>
+         <div class="ui-block-b">
+             <span> Select Function Generator </span>
+             <select name="Function Generator" id='SelectFunctionGenerator'>
+                 <option value="DS345">DS345 (Port 101)</option>
+                 <option value="DS345_2">DS345_2 (Port 104)</option>
+             </select>
+            <span> Lock-In Sensitivity </span>
+            <select name="LockInSens" id='LockInSensitivity'>
+                <option value="26"> 1V/muA </option>
+                <option value="25"> 500 mV/nA </option>
+		<option value="24"> 200 mV/nA </option>
+                <option value="23"> 100 mV/nA </option>
+                <option value="22"> 50 mV/nA </option>
+                <option value="21"> 20 mV/nA </option>
+                <option value="20"> 10 mV/nA </option>
+		<option value="19"> 5 mV/nA </option>
+                <option value="18"> 2 mV/nA </option>
+                <option value="17"> 1 mV/nA </option>
+                <option value="16"> 500 muV/pA </option>
+                <option value="15"> 200 muV/pA </option>
+                <option value="14"> 100 muV/pA </option>
+                <option value="13"> 50 muV/pA </option>
+                <option value="12"> 20 muV/pA </option>
+                <option value="11"> 10 muV/pA </option>
+                <option value="10"> 5 muV/pA </option>
+                <option value="9"> 2 muV/pA </option>
+                <option value="8"> 1 muV/pA </option>
+                <option value="7"> 500 nV/fA </option>
+                <option value="6"> 200 nV/fA </option>
+                <option value="5"> 100 nV/fA </option>
+                <option value="4"> 50 nV/fA </option>
+                <option value="3"> 20 nV/fA </option>
+                <option value="2"> 10 nV/fA </option>
+                <option value="1"> 5 nV/fA </option>
+                <option value="0"> 2 nV/fA </option>
+            </select>
+            <span> Lock-In Phase [rad] </span>
+            <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='LockInPhase'>
+         </div>
+     </div>
+
+    Comments
+
+    <div class= '.controlgroup-textinput'>
+        <textarea data-wrapper-class='controlgroup-textinput' class='input_val' id='FO_comments'></textarea>
+    </div>
+    <div class="ui-grid-a ui-responsive">
+        <div class="ui-block-a">
+            <button class="ui-corner-all" id="StartFOScanButton"> Start Scan </button>
+        </div>
+        <div class="ui-block-b">
+            <button class="ui-corner-all" id="StopFOScanButton"> Stop Scan </button>
+        </div>
+    </div>
+
+    <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-left">Close</a>
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+""",
+    "script" : """
+
+        $('#StartFOScanButton').on('click',function() {
+        var startFrequency = $('#startf').val();
+        var stopFrequency = $('#stopf').val();
+        var incrementFrequency = $('#incrementf').val();
+        var selectLockIn = $('#SelectLockIn').val();
+        var LockInTimeConstant = $('#LockInTimeConstant').val();
+        var LockInAtt = $('#LockInAtt').val();
+        var SelectFunctionGenerator = $('#SelectFunctionGenerator').val();
+        var LockInPhase = $('#LockInPhase').val();
+        var FOComments = $('#FO_comments').val();
+        console.log(FOComments);
+            var send_doc = { cmd_name : "start_scan","arguments" : [ startFrequency, stopFrequency, incrementFrequency , selectLockIn , LockInTimeConstant , LockInAtt , SelectFunctionGenerator , LockInPhase , FOComments ] };
+            nedm.get_database().send_command( send_doc);
+        });
+
+
+        $('.FOSCAN').on('load',function() {
+            console.log('Bing!');
+        });
+
+
+
+
+    var row = [[1,1],[2,3],[4,5],[6,7],[8,9],[10,11],[12,13],[14,15],[16,17],[18,19],[20,21]];
+      // new nedm.Dygraph(document.getElementById("fograph"),row);
+    // new nedm.Dygraph(document.getElementById("davllscan"),row);
+    // new nedm.Dygraph(document.getElementById("lockinstream"),row);
+
+
+
+
+$(document).on('pageshow', function() {
+    new nedm.Dygraph(document.getElementById("fograph"),row);
+    });
+
+
+
+
+
+"""
+
+}
