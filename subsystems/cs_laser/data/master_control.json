@@ -511,8 +511,8 @@
 
 """,
     "script" : """
-
-        $('#StartFOScanButton').on('click',function() {
+function(thediv, docobj) {
+    $('#StartFOScanButton').on('click',function() {
         var startFrequency = $('#startf').val();
         var stopFrequency = $('#stopf').val();
         var incrementFrequency = $('#incrementf').val();
@@ -523,14 +523,14 @@
         var LockInPhase = $('#LockInPhase').val();
         var FOComments = $('#FO_comments').val();
         console.log(FOComments);
-            var send_doc = { cmd_name : "start_scan","arguments" : [ startFrequency, stopFrequency, incrementFrequency , selectLockIn , LockInTimeConstant , LockInAtt , SelectFunctionGenerator , LockInPhase , FOComments ] };
-            nedm.get_database().send_command( send_doc);
-        });
+        var send_doc = { cmd_name : "start_scan","arguments" : [ startFrequency, stopFrequency, incrementFrequency , selectLockIn , LockInTimeConstant , LockInAtt , SelectFunctionGenerator , LockInPhase , FOComments ] };
+        nedm.get_database().send_command( send_doc);
+    });
 
 
-        $('.FOSCAN').on('load',function() {
-            console.log('Bing!');
-        });
+    $('.FOSCAN').on('load',function() {
+        console.log('Bing!');
+    });
 
 
 
@@ -540,17 +540,9 @@
     // new nedm.Dygraph(document.getElementById("davllscan"),row);
     // new nedm.Dygraph(document.getElementById("lockinstream"),row);
 
+    var dyg = new nedm.Dygraph($(".fograph", $(theCurrentPage))[0],row);
 
-
-
-$(document).on('pageshow', function() {
-    new nedm.Dygraph(document.getElementById("fograph"),row);
-    });
-
-
-
-
-
+}
 """
 
 }
