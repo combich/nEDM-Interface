@@ -537,9 +537,9 @@ function(thediv, docobj) {
 
 
     $('#SubmitButtonProbe').on('click',function() {
-        var LaserCurrentProbe = $('#LaserCurrentProbe');
-        var LaserTemperatureProbe = $('#LaserTemperatureProbe');
-        var ProbeSlider = $('#probe_slider');
+        var LaserCurrentProbe = $('#LaserCurrentProbe').val();
+        var LaserTemperatureProbe = $('#LaserTemperatureProbe').val();
+        var ProbeSlider = $('#probe_slider').val();
         var send_doc = { cmd_name : "SetLaserProbe","arguments" : [LaserCurrentProbe,LaserTemperatureProbe,ProbeSlider] };
         nedm.get_database().send_command(send_doc);
     });
@@ -547,12 +547,38 @@ function(thediv, docobj) {
 
 
     $('#SubmitButtonPump').on('click',function() {
-        var LaserCurrentPump = $('#LaserCurrentPump');
-        var LaserTemperaturePump = $('#LaserTemperaturePump');
-        var PumpSlider = $('#pump_slider');
+        var LaserCurrentPump = $('#LaserCurrentPump').val();
+        var LaserTemperaturePump = $('#LaserTemperaturePump').val();
+        var PumpSlider = $('#pump_slider').val();
         var send_doc = { cmd_name : "SetLaserPump","arguments" : [LaserCurrentPump,LaserTemperaturePump,PumpSlider] };
         nedm.get_database().send_command(send_doc);
     });
+
+
+
+    $('#SubmitButtonPIDPump').on('click',function() {
+        var PumpSetpoint = $('#PumpSetpoint').val();
+        var PumpP = $('#PumpP').val();
+        var PumpI = $('#PumpI').val();
+        var PumpD = $('#PumpD').val();
+        var PumpLockSlider = ('#pump_lock_slider').val();
+        var send_doc() = { cmd_name : "PumpPIDSettings", "arguments" : [PumpSetpoint, PumpP, PumpI, PumpD, PumpLockSlider] };
+        nedm.get_database().send_command(send_doc);
+    });
+
+
+    $('#SubmitButtonPIDProbe').on('click',function() {
+        var ProbeSetpoint = $('#ProbeSetpoint').val();
+        var ProbeP = $('#ProbeP').val();
+        var ProbeI = $('#ProbeI').val();
+        var ProbeD = $('#ProbeD').val();
+        var ProbeLockSlider = ('#probe_lock_slider').val();
+        var send_doc() = { cmd_name : "ProbePIDSettings", "arguments" : [ProbeSetpoint, ProbeP, ProbeI, ProbeD, ProbeLockSlider] };
+        nedm.get_database().send_command(send_doc);
+    });
+
+
+
 
 
 
