@@ -283,10 +283,10 @@
 
 <div data-role="popup" data-transition="slideup" data-position-to = "window" id="CommandPopup" class="ui-content">
     <h2> Send Command to Device </h2>
-    <textarea data-wrapper-class="controlgroup-textinput" class="input_val" id="send_command"></textarea>
+    <textarea data-wrapper-class="controlgroup-textinput" class="input_val" id="SendCommand"></textarea>
     <span> Adresse/Port of Device </span>
     <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='AdressDevice'>
-    <button class='ui-corner-all'>Send Single Command To Device</button>
+    <button class='ui-corner-all' id='SendSingleCommand'>Send Single Command To Device</button>
     <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-left">Close</a>
 
 </div>
@@ -526,6 +526,34 @@ function(thediv, docobj) {
         var send_doc = { cmd_name : "start_scan","arguments" : [ startFrequency, stopFrequency, incrementFrequency , selectLockIn , LockInTimeConstant , LockInAtt , SelectFunctionGenerator , LockInPhase , FOComments ] };
         nedm.get_database().send_command( send_doc);
     });
+
+
+    $('#SendSingleCommand').on('click',function() {
+        var AdressDeivce = $('#AdressDevice').val();
+        var SingleCommand = $('#SingleCommand').val(); 
+        var send_doc = { cmd_name : "SendSingleCommand","arguments" : [AdressDevice, SingleCommand]};
+        nedm.get_dabase().send_command(send_doc);
+     });
+
+
+    $('#SubmitButtonProbe').on('click',function() {
+        var LaserCurrentProbe = $('#LaserCurrentProbe');
+        var LaserTemperatureProbe = $('#LaserTemperatureProbe');
+        var ProbeSlider = $('#probe_slider');
+        var send_doc = { cmd_name : "SetLaserProbe","arguments" : [LaserCurrentProbe,LaserTemperatureProbe,ProbeSlider] };
+        nedm.get_database().send_command(send_doc);
+    });
+
+
+
+    $('#SubmitButtonPump').on('click',function() {
+        var LaserCurrentPump = $('#LaserCurrentPump');
+        var LaserTemperaturePump = $('#LaserTemperaturePump');
+        var PumpSlider = $('#pump_slider');
+        var send_doc = { cmd_name : "SetLaserPump","arguments" : [LaserCurrentPump,LaserTemperaturePump,PumpSlider] };
+        nedm.get_database().send_command(send_doc);
+    });
+
 
 
     $('.FOSCAN').on('load',function() {
