@@ -347,7 +347,7 @@
                 <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='PumpI'>
                 <span> Pump Laser D </span>
                 <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='PumpD'>
-                <button class="ui-corner-all"> Submit </button>
+                <button class="ui-corner-all" id="SubmitButtonPIDPump"> Submit </button>
                 <select name="slidy4" style="margin-left : auto; margin-right : auto;" id="pump_lock_slider" data-role="slider">
                     <option value="PumpLockOn"> On </option>
                     <option value="PumpLockOff"> Off </option>
@@ -364,7 +364,7 @@
                 <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='ProbeI'>
                 <span> Probe Laser D </span>
                 <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='ProbeD'>
-                <button class="ui-corner-all"> Submit </button>
+                <button class="ui-corner-all" id="SubmitButtonPIDProbe"> Submit </button>
                 <select name="slidy4" style="margin-left : auto; margin-right : auto;" id="probe_lock_slider" data-role="slider">
                     <option value="ProbeLockOn"> On </option>
                     <option value="ProbeLockOff"> Off </option>
