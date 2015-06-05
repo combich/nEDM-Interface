@@ -106,6 +106,7 @@
         <h3>Lock-In</h3>
         <div id="lockinstream"></div>
 
+        <div class="LockInStream"></div>
         <div class="ui-grid-b ui-responsive">
             <div class="ui-block-a">
             <fieldset>
@@ -192,6 +193,7 @@
 
 <div data-role="popup" data-transition="slideup" data-position-to = "window" id="DAVLLScan" class="ui-content">
     <h2> DAVLL Scan </h2>
+    <div class="DAVLLScan"></div>
     <div id="davllscan"></div>
     <div data-role = '.controlgroup' data-type='horizontal'>
         <div class="ui-grid-b ui-responsive">
@@ -210,6 +212,14 @@
                 <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='DAVLLIncrement'>
             </div>
         </div>
+
+
+     <span> Select DAVLL </span>
+            <select name="DAVLL" id='SelectDAVLL'>
+                <option value="ProbeDAVLL">Probe DAVLL</option>
+                <option value="PumpDAVLL">Pump DAVLL</option>
+            </select>
+
 
         <div class="ui-grid-a ui-responsive">
             <div class="ui-block-a">
@@ -267,6 +277,50 @@
 
 <div data-role="popup" data-transition="slideup" data-position-to = "window" id="DAVLLPuppy" class="ui-content">
     <h2> DAVLL Puppy </h2>
+
+    <div data-role = '.controlgroup' data-type='horizontal'>
+        <div class="ui-grid-a ui-responsive">
+            <div class="ui-block-a">
+            <h3> Pump Puppy Settings </h3>
+                <span> Pump Puppy Temperature [C] </span>
+                <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='PumpPuppySetpoint'>
+                <span> Pump Puppy P </span>
+                <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='PumpPuppyP'>
+                <span> Pump Puppy I </span>
+                <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='PumpPuppyI'>
+                <span> Pump Puppy D </span>
+                <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='PumpPuppyD'>
+                <button class="ui-corner-all" id="SubmitButtonPuppyPump"> Submit </button>
+                <select name="slidy4" style="margin-left : auto; margin-right : auto;" id="pump_puppy_slider" data-role="slider">
+                    <option value="PumpPuppyOn"> On </option>
+                    <option value="PumpPuppyOff"> Off </option>
+                </select>
+             </div>
+
+            <div class="ui-block-b">
+            <h3> Probe Puppy Settings </h3>
+                <span> Probe Puppy Temperature [C]</span>
+                <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='ProbePuppySetpoint'>
+                <span> Probe Puppy P </span>
+                <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='ProbePuppyP'>
+                <span> Probe Puppy I </span>
+                <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='ProbePuppyI'>
+                <span> Probe Puppy D </span>
+                <input type="text" data-wrapper-class='controlgroup-textinput ui-btn' class='input_val' id='ProbePuppyD'>
+                <button class="ui-corner-all" id="SubmitButtonPuppyProbe"> Submit </button>
+                <select name="slidy4" style="margin-left : auto; margin-right : auto;" id="probe_puppy_slider" data-role="slider">
+                    <option value="ProbePuppyOn"> On </option>
+                    <option value="ProbePuppyOff"> Off </option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
     <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-left">Close</a>
 
 </div>
@@ -562,7 +616,7 @@ function(thediv, docobj) {
         var PumpI = $('#PumpI').val();
         var PumpD = $('#PumpD').val();
         var PumpLockSlider = ('#pump_lock_slider').val();
-        var send_doc() = { cmd_name : "PumpPIDSettings", "arguments" : [PumpSetpoint, PumpP, PumpI, PumpD, PumpLockSlider] };
+        var send_doc = { cmd_name : "PumpPIDSettings", "arguments" : [PumpSetpoint, PumpP, PumpI, PumpD, PumpLockSlider] };
         nedm.get_database().send_command(send_doc);
     });
 
@@ -573,9 +627,112 @@ function(thediv, docobj) {
         var ProbeI = $('#ProbeI').val();
         var ProbeD = $('#ProbeD').val();
         var ProbeLockSlider = ('#probe_lock_slider').val();
-        var send_doc() = { cmd_name : "ProbePIDSettings", "arguments" : [ProbeSetpoint, ProbeP, ProbeI, ProbeD, ProbeLockSlider] };
+        var send_doc = { cmd_name : "ProbePIDSettings", "arguments" : [ProbeSetpoint, ProbeP, ProbeI, ProbeD, ProbeLockSlider] };
         nedm.get_database().send_command(send_doc);
     });
+
+
+
+    $('#probe_slider').on('change', function() {
+        var ProbeLaserStatus = $('#probe_slider').val();
+        var send_doc = {cmd_name : "ChangeProbeLaserStatus","arguments" : [ProbeLaserStatus] };
+        nedm.get_database().send_command(send_doc);
+    });
+
+
+    $('#pump_slider').on('change', function() {
+        var ProbeLaserStatus = $('#pump_slider').val(); 
+        var send_doc = {cmd_name : "ChangePumpLaserStatus","arguments" : [PumpLaserStatus] }; 
+        nedm.get_database().send_command(send_doc);
+    });
+
+
+    $('#pump_lock_slider').on('change', function() {
+        var PumpLockStatus = $('#pump_lock_slider').val(); 
+        var send_doc = {cmd_name : "ChangePumpLaserPIDStatus","arguments" : [PumpLockStatus] }; 
+        nedm.get_database().send_command(send_doc);
+    });
+
+
+    $('#probe_lock_slider').on('change', function() {
+        var ProbeLockStatus = $('#probe_lock_slider').val(); 
+        var send_doc = {cmd_name : "ChangeProbeLaserPIDStatus","arguments" : [ProbeLockStatus] }; 
+        nedm.get_database().send_command(send_doc);
+    });
+
+
+   $('#StartFID').on('click',function() {
+        var FIDBursts = $('#FIDBursts').val();
+        var FIDFrequency = $('#FIDFrequency').val();
+        var FIDDelay = $('#FIDDelay').val();
+        var send_doc = { cmd_name : "StartFID","arguments" : [FIDBursts,FIDFrequency,FIDDelay] };
+        nedm.get_database().send_command(send_doc);
+    });
+
+
+   $('#StartDAVLLScan').on('click',function() {
+        var StartVoltage = $('#DAVLLStart').val();
+        var StopVoltage = $('#DAVLLStop').val();
+        var Increment = $('#DAVLLIncrement').val();
+        var DAVLLAddress = $('#SelectDAVLL').val();
+        var send_doc = { cmd_name : "DAVLLScan","arguments" : [StartVoltage,StopVoltage,Increment,DAVLLAddress] };
+        nedm.get_database().send_command(send_doc);
+    });
+
+
+
+   $('#SubmitButtonPuppyProbe').on('click',function() {
+        var ProbeTemperature = $('#ProbePuppySetpoint').val();
+        var ProbePuppyP = $('#ProbePuppyP').val();
+        var ProbePuppyI = $('#ProbePuppyI').val();
+        var ProbePuppyD = $('#ProbePuppyD').val();
+        var send_doc = { cmd_name : "ProbePuppySettings","arguments" : [ProbeTemperature,ProbePuppyP,ProbePuppyI,ProbePuppyD] };
+        nedm.get_database().send_command(send_doc);
+    });
+
+
+
+   $('#SubmitButtonPuppyPump').on('click',function() {
+        var PumpTemperature = $('#PumpPuppySetpoint').val();
+        var PumpPuppyP = $('#PumpPuppyP').val();
+        var PumpPuppyI = $('#PumpPuppyI').val();
+        var PumpPuppyD = $('#PumpPuppyD').val();
+        var send_doc = { cmd_name : "PumpPuppySettings","arguments" : [PumpTemperature,PumpPuppyP,PumpPuppyI,PumpPuppyD] };
+        nedm.get_database().send_command(send_doc);
+    });
+
+
+
+
+    $('#pump_puppy_slider').on('change', function() {
+        var PumpPuppyStatus = $('#pump_puppy_slider').val();
+        var send_doc = {cmd_name : "ChangePumpPuppyStatus","arguments" : [PumpPuppyStatus] };
+        nedm.get_database().send_command(send_doc);
+    });
+
+
+    $('#probe_puppy_slider').on('change', function() {
+        var ProbePuppyStatus = $('#probe_puppy_slider').val();
+        var send_doc = {cmd_name : "ChangeProbePuppyStatus","arguments" : [ProbePuppyStatus] };
+        nedm.get_database().send_command(send_doc);
+    });
+
+
+
+   $('#StartLockInStreaming').on('click',function() {
+        var LockInChannelsToStream = $('#LockInCH').val();
+        var LockInAddress = $('#lock-in_monitoring').val();
+        var send_doc = { cmd_name : "LockInStreaming","arguments" : [LockInChannelsToStream,LockInAddress] };
+        nedm.get_database().send_command(send_doc);
+    });
+
+
+
+
+
+
+
+
 
 
 
@@ -595,6 +752,9 @@ function(thediv, docobj) {
     // new nedm.Dygraph(document.getElementById("lockinstream"),row);
 
     var dyg = new nedm.Dygraph($(".fograph", $(theCurrentPage))[0],row);
+    var dyg_DAVLL  = new nedm.Dygraph($(".DAVLLScan",$(theCurrentPage))[0],row);
+    var dyg_LockIn_Stream = new nedm.Dygraph($(".LockInStream",$(theCurrentPage))[0],row);
+
 
 }
 """
